@@ -1,5 +1,7 @@
 # asciidoctor-kaitai
 
+[![CI](https://github.com/FlorianFranzen/asciidoctor-kaitai/actions/workflows/ci.yml/badge.svg)](https://github.com/FlorianFranzen/asciidoctor-kaitai/actions/workflows/ci.yml)
+
 An [Asciidoctor](https://asciidoctor.org) extension that lets you write
 [Kaitai Struct](https://kaitai.io) binary format definitions directly inside an
 AsciiDoc document. Each definition is compiled with the Kaitai Struct compiler,
