@@ -1,0 +1,7 @@
+/examples/*.html
+/examples/*.ksy.out
+/examples/exports/
+/result
+/.direnv/
+*.gem
+Gemfile.lock
