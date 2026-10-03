@@ -30,7 +30,7 @@ module Asciidoctor
     def read_contents(target, opts = {})
       if (uri = Base64DataUriRx.match target)
         # TODO: What to do with uri[:mimetype] ?
-        return Base64.strict_decode64(uri[:base64]).force_encoding('UTF-8')
+        return uri[:base64].unpack1("m0").force_encoding('UTF-8')
       end
 
       super target, opts
@@ -388,7 +388,7 @@ module Kaitai
       end
 
       # Convert and embed graphviz graph as inline svg
-      target_base64 = Base64.strict_encode64 `dot -T svg #{output_path}`
+      target_base64 = [`dot -T svg #{output_path}`].pack("m0")
       raise 'Failed to run graphviz' if target_base64.empty?
 
       @attributes['target'] = "data:image/svg+xml;base64,#{target_base64}"
