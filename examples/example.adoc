@@ -1,0 +1,72 @@
+= Kaitai Struct Example
+:kaitai-imports: scale
+
+This document shows how to embed https://kaitai.io[Kaitai Struct] definitions
+in AsciiDoc using the `kaitai` block. Each block is compiled to a diagram and
+embedded inline. Blocks can reference each other via `kaitai-dependencies` and
+import external `.ksy` files next to the document via `kaitai-imports`.
+
+.A simple record
+[kaitai#record]
+++++
+seq:
+  - id: hello
+    type: u4
+  - id: world
+    type: pair
+  - id: kind
+    type: u1
+    enum: kind
+  - id: details
+    type:
+      switch-on: kind
+      cases:
+        "kind::none": none
+        "kind::apple": apple
+    doc: Important field with its own doc
+enums:
+  kind:
+    0: none
+    1: some
+    2: apple
+    3: banana
+types:
+  pair:
+    seq:
+      - id: a
+        type: u4
+      - id: b
+        type: u4
+  none:
+    seq:
+      - id: n
+        type: b8
+  apple:
+    seq:
+      - id: size
+        type: u4
+++++
+
+.A record using imported SCALE types
+[kaitai#payload]
+++++
+seq:
+  - id: what
+    type: scale::compact_int
+  - id: up
+    type: scale::string
+++++
+
+.Everything together
+[kaitai#container,kaitai-dependencies="record,payload"]
+++++
+seq:
+  - id: num_records
+    type: scale::compact_int
+  - id: records
+    type: record
+    repeat: expr
+    repeat-expr: num_records.value
+  - id: payload
+    type: payload
+++++
